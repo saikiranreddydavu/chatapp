@@ -25,5 +25,4 @@ jobs:
           upload_url : "https://github.com/saikiranreddydavu/chatapp/blob/master/firebase.json"
           title: v${{inputs.ReleaseVersion }}
           files: |
-            LICENSE.txt
-            *.jar
+            firebase.json
