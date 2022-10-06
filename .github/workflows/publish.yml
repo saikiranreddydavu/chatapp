@@ -2,28 +2,27 @@ name: Bump version
 on:
   workflow_dispatch:
     inputs: 
-      majorNumber:
-        description: "major version number"
-        required: true
-      minorNumber:
-        description: "minor version number"
-        required: true
-      buildNumber:
-        description: "build version number"
-        required: true
-      releaseNotesLink:
-        description: "release notes wiki page link"
+      ReleaseVersion:
+        description: "Release version number"
         required: true
 jobs:
-  build:
-    runs-on: ubuntu-22.04
-    steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: '0'
+  pre-release:
+    name: "Pre Release"
+    runs-on: "ubuntu-latest"
 
-    - name: Bump version and push tag
-      uses: anothrNick/github-tag-action@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        WITH_V: true
+    steps:
+      # ...
+      - name: "Build & test"
+        run: |
+          echo "done!"
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: false
+          draft : true
+          title: ${{inputs.ReleaseVersion }}
+          files: |
+            LICENSE.txt
+            *.jar
