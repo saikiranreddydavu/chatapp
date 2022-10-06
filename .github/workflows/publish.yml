@@ -19,10 +19,10 @@ jobs:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: v${{inputs.ReleaseVersion}}
+          automatic_release_tag: ${{inputs.ReleaseVersion}}
           prerelease: false
           draft : true
-          title: ${{inputs.ReleaseVersion }}
+          title: v${{inputs.ReleaseVersion }}
           files: |
             LICENSE.txt
             *.jar
