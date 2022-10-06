@@ -22,7 +22,5 @@ jobs:
           automatic_release_tag: ${{inputs.ReleaseVersion}}
           prerelease: false
           draft : true
-          upload_url : "https://github.com/saikiranreddydavu/chatapp/blob/master/firebase.json"
           title: v${{inputs.ReleaseVersion }}
-          files: |
-            firebase.json
+          files: firebase.json
