@@ -1,27 +1,18 @@
----
-name: "tagged-release"
-
-
+name: Bump version
 on:
   push:
-    tags:
-      - "*"
-
+    branches:
+      - master
 jobs:
-  tagged-release:
-    name: "Tagged Release"
-    runs-on: "ubuntu-latest"
-
+  build:
+    runs-on: ubuntu-22.04
     steps:
-      # ...
-      - name: "Build & test"
-        run: |
-          echo "done!"
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: '0'
 
-      - uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: false
-          files: |
-            LICENSE.txt
-            *.jar
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        WITH_V: true
