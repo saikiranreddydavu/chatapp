@@ -1,8 +1,19 @@
 name: Bump version
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch:
+    inputs: 
+      majorNumber:
+        description: "major version number"
+        required: true
+      minorNumber:
+        description: "minor version number"
+        required: true
+      buildNumber:
+        description: "build version number"
+        required: true
+      releaseNotesLink:
+        description: "release notes wiki page link"
+        required: true
 jobs:
   build:
     runs-on: ubuntu-22.04
