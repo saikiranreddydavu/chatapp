@@ -12,7 +12,7 @@ on:
         description: "build version number"
         required: true
 env:
-  BRANCH_NAME: release-${{ inputs.ReleaseVersion }}
+  BRANCH_NAME: release-${{ inputs.majorNumber }}.${{ inputs.minorNumber }}.${{ inputs.buildNumber }}
 jobs:
   pre-release:
   
