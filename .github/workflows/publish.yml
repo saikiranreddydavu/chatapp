@@ -2,11 +2,20 @@ name: Bump version
 on:
   workflow_dispatch:
     inputs: 
-      ReleaseVersion:
-        description: "Release version number"
+      majorNumber:
+        description: "major version number"
         required: true
+      minorNumber:
+        description: "minor version number"
+        required: true
+      buildNumber:
+        description: "build version number"
+        required: true
+env:
+  BRANCH_NAME: release-${{ inputs.ReleaseVersion }}
 jobs:
   pre-release:
+  
     name: "Pre Release"
     runs-on: "ubuntu-latest"
 
@@ -19,8 +28,18 @@ jobs:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: ${{inputs.ReleaseVersion}}
+          automatic_release_tag: ${{inputs.majorNumber}}.${{inputs.minorNumber}}.${{inputs.buildNumber}}
           prerelease: false
           draft : true
-          title: v${{inputs.ReleaseVersion }}
-          files: firebase.json
+          title: v${{inputs.majorNumber}}.${{inputs.minorNumber}}.${{inputs.buildNumber}}
+          
+      - name: create release branch
+        run: |
+          git fetch --all
+          git pull
+          git checkout -b ${{ env.BRANCH_NAME }}
+      - name: update manifest
+        run: |
+          perl -i -pe 's/(major_version=)(\d+)$/$1.(${{ inputs.majorNumber }})/e' manifest; \
+          perl -i -pe 's/(minor_version=)(\d+)$/$1.(${{ inputs.minorNumber }})/e' manifest; \
+          perl -i -pe 's/(build_version=)(\d+)$/$1.(${{ inputs.buildNumber }})/e' manifest
