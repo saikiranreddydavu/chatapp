@@ -1,4 +1,4 @@
-name: Release1
+name: Release2
 on:
   workflow_dispatch:
     inputs: 
@@ -38,6 +38,12 @@ jobs:
           prerelease: false
           draft : true
           title: v${{inputs.majorNumber}}.${{inputs.minorNumber}}.${{inputs.buildNumber}}
+      
+      - name: create release branch
+        run: |
+          git fetch --all
+          git pull
+          git checkout -b ${{ env.BRANCH_NAME }}
           
       - name: update manifest
         run: |
