@@ -1,4 +1,4 @@
-name: Release5
+name: Release6
 on:
   workflow_dispatch:
     inputs: 
@@ -40,21 +40,15 @@ jobs:
           git fetch --all
           git pull
           git checkout -b ${{ env.BRANCH_NAME }}
+          git commit -m "Release ${{ env.BRANCH_NAME}}"; \
+          git push origin ${{ env.BRANCH_NAME }}
           
       - name: update manifest
         run: |
           perl -i -pe 's/(major_version=)(\d+)$/$1.(${{ inputs.majorNumber }})/e' manifest; \
           perl -i -pe 's/(minor_version=)(\d+)$/$1.(${{ inputs.minorNumber }})/e' manifest; \
           perl -i -pe 's/(build_version=)(\d+)$/$1.(${{ inputs.buildNumber }})/e' manifest
-          
-      - name: stage changes for release commit
-        run: |
-          git config --global user.name ${{ secrets.GHA_USER_NAME }}
-          git config --global user.email ${{ secrets.GHA_USER_EMAIL }}
-          git add app store; \
-          git commit -m "Release ${{ env.BRANCH_NAME}}"; \
-          git push origin ${{ env.BRANCH_NAME }} --tags
-          
+                 
       - name: "Build & test"
         run: |
           echo "done!"
