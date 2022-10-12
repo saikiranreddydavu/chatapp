@@ -1,4 +1,4 @@
-name: Release3
+name: Release4
 on:
   workflow_dispatch:
     inputs: 
@@ -35,18 +35,6 @@ jobs:
       - name: check setup nodejs
         run: node -v
         
-      - name: "Build & test"
-        run: |
-          echo "done!"
-
-      - uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: ${{inputs.majorNumber}}.${{inputs.minorNumber}}.${{inputs.buildNumber}}
-          prerelease: false
-          draft : true
-          title: v${{inputs.majorNumber}}.${{inputs.minorNumber}}.${{inputs.buildNumber}}
-      
       - name: create release branch
         run: |
           git fetch --all
@@ -58,3 +46,15 @@ jobs:
           perl -i -pe 's/(major_version=)(\d+)$/$1.(${{ inputs.majorNumber }})/e' manifest; \
           perl -i -pe 's/(minor_version=)(\d+)$/$1.(${{ inputs.minorNumber }})/e' manifest; \
           perl -i -pe 's/(build_version=)(\d+)$/$1.(${{ inputs.buildNumber }})/e' manifest
+          
+      - name: "Build & test"
+        run: |
+          echo "done!"
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: ${{inputs.majorNumber}}.${{inputs.minorNumber}}.${{inputs.buildNumber}}
+          prerelease: false
+          draft : true
+          title: v${{inputs.majorNumber}}.${{inputs.minorNumber}}.${{inputs.buildNumber}}
