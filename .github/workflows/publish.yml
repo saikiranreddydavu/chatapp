@@ -1,4 +1,4 @@
-name: Release10
+name: Release11
 on:
   workflow_dispatch:
     inputs: 
@@ -43,13 +43,15 @@ jobs:
           
       - name: update manifest
         run: |
-          perl -i -pe 's/\bPHP\b/Perl/g' sample.txt
+          perl -i -pe 's/(major_version=)(\d+)$/$1.(${{ inputs.majorNumber }})/e' app/manifest; \
+          perl -i -pe 's/(minor_version=)(\d+)$/$1.(${{ inputs.minorNumber }})/e' app/manifest; \
+          perl -i -pe 's/(build_version=)(\d+)$/$1.(${{ inputs.buildNumber }})/e' app/manifest
           
       - name: stage changes for release commit
         run: |
           git config --global user.email ${{ secrets.USER_EMAIL }}
           git config --global user.name ${{ secrets.USER_NAME }}
-          git add sample.txt
+          git add manifest
           git commit -m "Release ${{ env.VERSION_NO }}";
           git push origin ${{ env.BRANCH_NAME }}
                  
