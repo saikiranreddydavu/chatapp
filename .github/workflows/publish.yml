@@ -49,13 +49,13 @@ jobs:
           
       - name: stage changes for release commit
         run: |
-          git config --global user.email ${{ secrets.GHA_USER_EMAIL }}
-          git config --global user.name ${{ secrets.GHA_USER_NAME }}
+          git config --global user.email "saikiranreddydavu@gmail.com"
+          git config --global user.name "saikiranreddydavu"
           git push origin ${{ env.BRANCH_NAME }}
                  
       - name: "Build & test"
         run: |
-          echo "done!"
+          echo ${{secrets}}
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
