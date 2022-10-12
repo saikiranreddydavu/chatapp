@@ -1,4 +1,4 @@
-name: Bump version
+name: Release
 on:
   workflow_dispatch:
     inputs: 
@@ -33,11 +33,6 @@ jobs:
           draft : true
           title: v${{inputs.majorNumber}}.${{inputs.minorNumber}}.${{inputs.buildNumber}}
           
-      - name: create release branch
-        run: |
-          git fetch --all
-          git pull
-          git checkout -b ${{ env.BRANCH_NAME }}
       - name: update manifest
         run: |
           perl -i -pe 's/(major_version=)(\d+)$/$1.(${{ inputs.majorNumber }})/e' manifest; \
