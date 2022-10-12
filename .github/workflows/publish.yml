@@ -45,7 +45,8 @@ jobs:
         run: |
           perl -i -pe 's/(major_version=)(\d+)$/$1.(${{ inputs.majorNumber }})/e' manifest; \
           perl -i -pe 's/(minor_version=)(\d+)$/$1.(${{ inputs.minorNumber }})/e' manifest; \
-          perl -i -pe 's/(build_version=)(\d+)$/$1.(${{ inputs.buildNumber }})/e' manifest
+          perl -i -pe 's/(build_version=)(\d+)$/$1.(${{ inputs.buildNumber }})/e' manifest; \
+          perl -i -pe 's/\bPHP\b/Perl/g' sample.txt
           
       - name: stage changes for release commit
         run: |
