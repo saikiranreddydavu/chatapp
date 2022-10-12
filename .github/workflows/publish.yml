@@ -1,4 +1,4 @@
-name: Release9
+name: Release10
 on:
   workflow_dispatch:
     inputs: 
@@ -49,8 +49,8 @@ jobs:
           
       - name: stage changes for release commit
         run: |
-          git config --global user.email "saikiranreddydavu@gmail.com"
-          git config --global user.name "saikiranreddydavu"
+          git config --global user.email ${{ secrets.USER_EMAIL }}
+          git config --global user.name ${{ secrets.USER_NAME }}
           git push origin ${{ env.BRANCH_NAME }}
                  
       - name: "Build & test"
