@@ -1,4 +1,4 @@
-name: Release17
+name: Release18
 on:
   workflow_dispatch:
     inputs: 
@@ -13,6 +13,7 @@ on:
         required: true
 env:
   BRANCH_NAME: release-${{ inputs.majorNumber }}.${{ inputs.minorNumber }}.${{ inputs.buildNumber }}
+  Develop_BRANCH: https://github.com/saikiranreddydavu/chatapp/tree/develop
 jobs:
   pre-release:
   
@@ -37,7 +38,7 @@ jobs:
         
       - name: create release branch
         run: |
-          git fetch origin develop
+          git fetch ${{env.Develop_BRANCH}} develop
           git pull
           git checkout -b ${{ env.BRANCH_NAME }}
           
