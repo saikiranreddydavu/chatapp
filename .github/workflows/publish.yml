@@ -13,7 +13,7 @@ on:
         required: true
 env:
   BRANCH_NAME: release-${{ inputs.majorNumber }}.${{ inputs.minorNumber }}.${{ inputs.buildNumber }}
-  FILE_NAME: POC.zip
+  FILE_NAME: POC
 jobs:
   pre-release:
   
