@@ -67,5 +67,5 @@ jobs:
           draft : true
           title: v${{inputs.majorNumber}}.${{inputs.minorNumber}}.${{inputs.buildNumber}}
           files: |
-            sample.txt
+            src/POC.zip
    
