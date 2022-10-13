@@ -38,8 +38,7 @@ jobs:
         
       - name: create release branch
         run: |
-          git fetch --all
-          git pull origin/develop
+          git fetch origin develop
           git checkout -b ${{ env.BRANCH_NAME }}
           
       - name: update manifest
