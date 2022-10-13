@@ -13,7 +13,7 @@ on:
         required: true
 env:
   BRANCH_NAME: release-${{ inputs.majorNumber }}.${{ inputs.minorNumber }}.${{ inputs.buildNumber }}
-  Develop_BRANCH: https://github.com/saikiranreddydavu/chatapp.git
+  FILE_NAME: POC.zip
 jobs:
   pre-release:
   
@@ -68,5 +68,5 @@ jobs:
           draft : true
           title: v${{inputs.majorNumber}}.${{inputs.minorNumber}}.${{inputs.buildNumber}}
           files: |
-            src/POC.zip
+            src/${{env.FILE_NAME}}.zip
    
